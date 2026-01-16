@@ -1,0 +1,69 @@
+"use client";
+
+import FormInput from "@/components/common/form-input";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Form } from "@/components/ui/form";
+import { INITIAL_LOGIN_FORM } from "@/constants/auth-constant";
+import { LoginForm, loginSchemaForm } from "@/validations/auth-validation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+
+export default function Login() {
+  const form = useForm<LoginForm>({
+    resolver: zodResolver(loginSchemaForm),
+    defaultValues: INITIAL_LOGIN_FORM,
+  });
+
+  const onSubmit = form.handleSubmit(async (data) => {
+    console.log(data);
+  });
+
+  return (
+    <Card>
+      <CardHeader className="text-center">
+        <CardTitle className="text-xl">Welcome Back</CardTitle>
+        <CardDescription>
+          Please sign in to access your examination dashboard.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={onSubmit} className="space-y-4">
+            <FormInput
+              form={form}
+              type="email"
+              name="email"
+              label="Email"
+              placeholder="Insert email here"
+            />
+            <FormInput
+              form={form}
+              type="password"
+              name="password"
+              label="Password"
+              placeholder="********"
+            />
+            <Button type="submit">Login</Button>
+          </form>
+        </Form>
+      </CardContent>
+      <CardFooter className="self-center">
+        <p className="text-[12px] font-light ">
+          Don{"'"}t have an account? {""}
+          <Link href="/register" className="font-bold text-blue-800">
+            Register for an exam
+          </Link>
+        </p>
+      </CardFooter>
+    </Card>
+  );
+}
