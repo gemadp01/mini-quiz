@@ -78,7 +78,10 @@ export default function Register() {
       <CardFooter className="self-center">
         <p className="text-[12px] font-light ">
           Already have an account?{" "}
-          <Link href="/login" className="font-bold text-blue-800">
+          <Link
+            href="/login"
+            className="font-bold text-blue-800 dark:text-blue-400"
+          >
             Login
           </Link>
         </p>

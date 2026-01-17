@@ -57,9 +57,12 @@ export default function Login() {
         </Form>
       </CardContent>
       <CardFooter className="self-center">
-        <p className="text-[12px] font-light ">
+        <p className="text-[12px] font-light">
           Don{"'"}t have an account? {""}
-          <Link href="/register" className="font-bold text-blue-800">
+          <Link
+            href="/register"
+            className="font-bold text-blue-500 hover:text-blue-600"
+          >
             Register for an exam
           </Link>
         </p>

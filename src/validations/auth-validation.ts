@@ -3,9 +3,11 @@ import z from "zod";
 const email = z
   .string()
   .min(1, "Email is required")
-  .email("Please enter a valid email address");
+  .refine((value) => value.toLowerCase().endsWith("@gmail.com"), {
+    message: "Email must be a @gmail.com address",
+  });
 
-const password = z.string().min(1, "Password is required");
+const password = z.string().min(8, "Password must be at least 8 characters");
 
 export const loginSchemaForm = z.object({
   email,
