@@ -17,6 +17,7 @@ Mini Quiz Ambis adalah platform kuis berbasis web untuk membantu pengguna berlat
 - Backend (AI-generated)
 
 ## Folder Structure
+```
 .
 └── mini-quiz/
     ├── public
@@ -68,19 +69,25 @@ Mini Quiz Ambis adalah platform kuis berbasis web untuk membantu pengguna berlat
     ├── postcss.config.mjs
     ├── README.md
     └── tsconfig.json
+```
 
 ## Run Locally
 
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/gemadp01/mini-quiz.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd my-project
+  cd mini-quiz
+```
+
+Copy .env from .env.example
+```bash
+    cp .env.example .env
 ```
 
 Install dependencies
