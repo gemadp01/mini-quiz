@@ -7,23 +7,67 @@ Mini Quiz Ambis adalah platform kuis berbasis web untuk membantu pengguna berlat
 - Frontend: Next.js (App Router)
   - Library:
     - tailwind-merge
+    - cva
     - clsx
     - shadcn ui
     - react-hook-form
     - zod validation
     - tanstack react query
-    - zustand (global state management)
+    - zustand
 - Backend (AI-generated)
 
 ## Folder Structure
-
-## Environment Variables
-
-To run this project, you will need to add the following environment variables to your .env file
-
-`API_KEY`
-
-`ANOTHER_API_KEY`
+.
+└── mini-quiz/
+    ├── public
+    ├── src/
+    │   ├── app/
+    │   │   ├── (auth)/
+    │   │   │   ├── login/
+    │   │   │   │   ├── _components/
+    │   │   │   │   ├── _hooks/
+    │   │   │   │   └── page.tsx
+    │   │   │   ├── register/
+    │   │   │   │   ├── _components/
+    │   │   │   │   ├── _hooks/
+    │   │   │   │   ├── success/
+    │   │   │   │   └── page.tsx
+    │   │   │   └── layout.tsx
+    │   │   ├── (dashboard)/
+    │   │   ├── api/
+    │   │   │   ├── auth/
+    │   │   │   ├── profile/
+    │   │   │   └── quiz/
+    │   │   ├── favicon.ico
+    │   │   ├── global.css
+    │   │   ├── layout.tsx
+    │   │   └── page.tsx
+    │   ├── components/
+    │   │   ├── common/
+    │   │   └── ui/
+    │   ├── config/
+    │   ├── constants/
+    │   ├── hooks/
+    │   ├── libs/
+    │   │   ├── axios/
+    │   │   ├── store/
+    │   │   └── utils.ts
+    │   ├── provider/
+    │   ├── services/
+    │   ├── types/
+    │   ├── validations/
+    │   └── proxy.ts
+    ├── .env.example
+    ├── .gitignore
+    ├── components.json
+    ├── eslint.config.mjs
+    ├── next-env.d.ts
+    ├── next.config.ts
+    ├── package-lock.json
+    ├── package.json
+    ├── postcss.config.mjs
+    ├── README.md
+    └── tsconfig.json
 
 ## Run Locally
 
