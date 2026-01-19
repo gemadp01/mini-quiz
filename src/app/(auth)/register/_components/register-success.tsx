@@ -1,11 +1,14 @@
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { MailCheck } from "lucide-react";
+import Link from "next/link";
 
 export default function RegisterSuccess() {
   return (
@@ -19,6 +22,11 @@ export default function RegisterSuccess() {
       <CardContent className="max-w-full">
         <MailCheck className="text-emerald-500 size-15 w-full" />
       </CardContent>
+      <CardFooter className="self-center">
+        <Button>
+          <Link href="/login">Back to Login</Link>
+        </Button>
+      </CardFooter>
     </Card>
   );
 }
