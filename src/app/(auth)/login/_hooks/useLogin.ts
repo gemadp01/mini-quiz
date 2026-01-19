@@ -5,13 +5,15 @@ import { loginSchemaForm, TLoginForm } from "@/validations/auth-validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const useLogin = () => {
   const router = useRouter();
-  const { setUser } = useAuthStore();
+  const { setToken, setUser, clearAuth } = useAuthStore();
+  const user = useAuthStore((state) => state.user);
+
   const [loading, setLoading] = useState(false);
 
   const form = useForm<TLoginForm>({
@@ -27,6 +29,8 @@ const useLogin = () => {
 
       if (loginResponse.success) {
         const { access_token } = loginResponse.data;
+
+        setToken(access_token);
 
         const { data: userResponse } =
           await authServices.getCurrentUser(access_token);
@@ -50,6 +54,12 @@ const useLogin = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      clearAuth();
+    }
+  }, [clearAuth, user]);
 
   return {
     form,

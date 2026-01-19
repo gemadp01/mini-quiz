@@ -12,20 +12,29 @@ export default function AuthHydrator({
   token: string;
 }) {
   const { setToken, setUser, clearAuth } = useAuthStore();
+  const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
-    if (!token) {
-      clearAuth();
-      return;
-    }
+    const hydrate = async () => {
+      if (!token) {
+        clearAuth();
+        return;
+      }
 
-    setToken(token);
+      try {
+        const response = await authServices.getCurrentUser(token);
+        if (!response.data.success) throw new Error("invalid token");
 
-    authServices
-      .getCurrentUser(token)
-      .then((res) => setUser(res.data))
-      .catch(() => clearAuth());
-  }, [token, setToken, setUser, clearAuth]);
+        if (!user) {
+          setUser(response.data.data);
+        }
+      } catch {
+        clearAuth();
+      }
+    };
+
+    hydrate();
+  }, [token, setToken, clearAuth, user, setUser]);
 
   return children;
 }

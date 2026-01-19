@@ -30,7 +30,7 @@ const useRegister = () => {
       router.push("/register/success");
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.log(error);
+        // console.log(error);
         const message =
           error.response?.data.error.message ?? "Something went wrong!";
         toast.error(message, {
