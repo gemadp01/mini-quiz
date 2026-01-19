@@ -5,21 +5,20 @@ export function proxy(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
   const { pathname } = request.nextUrl;
 
-  const publicPaths = [
-    "/login",
-    "/register",
-    "/register/success",
-    "/activation",
-    "/verify",
-  ];
-  const isPublicPath = publicPaths.some((path) => pathname.startsWith(path));
+  if (pathname === "/" && token) {
+    return NextResponse.redirect(new URL("/user/dashboard", request.url));
+  }
 
-  if (!token && !isPublicPath) {
+  if (pathname === "/" && !token) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (token && isPublicPath) {
-    return NextResponse.redirect(new URL("/user", request.url));
+  if (pathname.startsWith("/user") && !token) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  if (pathname === "/user") {
+    return NextResponse.redirect(new URL("/user/dashboard", request.url));
   }
 
   return NextResponse.next();
