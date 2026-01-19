@@ -10,6 +10,7 @@ export function proxy(request: NextRequest) {
     "/register",
     "/register/success",
     "/activation",
+    "/verify",
   ];
   const isPublicPath = publicPaths.some((path) => pathname.startsWith(path));
 

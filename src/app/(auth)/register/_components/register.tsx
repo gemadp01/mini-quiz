@@ -1,5 +1,6 @@
 "use client";
 
+import useRegister from "@/app/(auth)/register/_hooks/useRegister";
 import FormInput from "@/components/common/form-input";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,25 +12,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
-import { INITIAL_REGISTER_FORM } from "@/constants/auth-constant";
-import {
-  RegisterForm,
-  registerSchemaForm,
-} from "@/validations/auth-validation";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Spinner } from "@/components/ui/spinner";
 import Link from "next/link";
 
-import { useForm } from "react-hook-form";
-
 export default function Register() {
-  const form = useForm<RegisterForm>({
-    resolver: zodResolver(registerSchemaForm),
-    defaultValues: INITIAL_REGISTER_FORM,
-  });
-
-  const onSubmit = form.handleSubmit(async (data) => {
-    console.log(data);
-  });
+  const { form, loading, onSubmit } = useRegister();
 
   return (
     <Card>
@@ -42,7 +29,7 @@ export default function Register() {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={onSubmit} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormInput
               form={form}
               type="text"
@@ -71,7 +58,7 @@ export default function Register() {
               label="Confirm Password"
               placeholder="Confirm your password"
             />
-            <Button type="submit">Register</Button>
+            <Button type="submit">{loading ? <Spinner /> : "Register"}</Button>
           </form>
         </Form>
       </CardContent>

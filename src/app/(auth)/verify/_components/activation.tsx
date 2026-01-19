@@ -11,39 +11,38 @@ import {
 import { UserRoundCheck, UserRoundX } from "lucide-react";
 
 interface PropTypes {
-  status: "true" | "false";
+  status: boolean;
+  message: string;
 }
 
 export default function Activation(props: PropTypes) {
-  const { status } = props;
+  const { status, message } = props;
 
   return (
     <Card>
       <CardHeader className="text-center">
         <CardTitle className="text-xl">
-          {status === "true" ? "Activation Success" : "Activation Failed"}
+          {status === true ? "Verification Success" : "Verification Failed"}
         </CardTitle>
         <CardDescription>
-          {status === "true"
+          {status === true
             ? "Thank you for your registration"
-            : "Confirmation code is invalid"}
+            : "Token has expired!"}
         </CardDescription>
       </CardHeader>
       <CardContent className="max-w-full">
-        {status === "true" ? (
+        {status === true ? (
           <UserRoundCheck className="text-emerald-500 size-15 w-full" />
         ) : (
           <UserRoundX className="text-red-500 size-15 w-full" />
         )}
       </CardContent>
-      {status === "true" ? (
+      {status === true ? (
         <CardFooter className="self-center">
           <Button>Go to login</Button>
         </CardFooter>
       ) : (
-        <p className="text-center text-[12px] font-bold ">
-          Please check your email to verify your account!
-        </p>
+        <p className="text-center text-[12px] font-bold ">{message}</p>
       )}
     </Card>
   );

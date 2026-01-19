@@ -9,12 +9,10 @@ const authServices = {
   login: (payload: ILoginData) =>
     instance.post(`${endpoint.AUTH}/login`, payload),
 
-  activation: async (token: string) =>
-    instance.post(`${endpoint.AUTH}/verify-email`, {
-      token,
-    }),
+  activation: (payload: string) =>
+    instance.post(`${endpoint.AUTH}/verify-email`, { payload }),
 
-  logout: async () => instance.post(`${endpoint.AUTH}/logout`),
+  logout: () => instance.post(`${endpoint.AUTH}/logout`),
 
   getCurrentUser: (token: string) =>
     instance.get("/auth/me", {
