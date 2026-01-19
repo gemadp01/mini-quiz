@@ -1,11 +1,9 @@
 import { DarkModeToggle } from "@/components/common/darkmode-toggle";
 import { GraduationCap } from "lucide-react";
 
-type AuthLayoutProps = {
-  children: React.ReactNode;
-};
-
-export default function AuthLayout({ children }: Readonly<AuthLayoutProps>) {
+export default function AuthLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className="relative bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="absolute top-4 right-4">

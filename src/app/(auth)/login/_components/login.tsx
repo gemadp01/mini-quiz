@@ -1,5 +1,6 @@
 "use client";
 
+import useLogin from "@/app/(auth)/login/_hooks/useLogin";
 import FormInput from "@/components/common/form-input";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,21 +12,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
-import { INITIAL_LOGIN_FORM } from "@/constants/auth-constant";
-import { LoginForm, loginSchemaForm } from "@/validations/auth-validation";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Spinner } from "@/components/ui/spinner";
+
 import Link from "next/link";
-import { useForm } from "react-hook-form";
 
 export default function Login() {
-  const form = useForm<LoginForm>({
-    resolver: zodResolver(loginSchemaForm),
-    defaultValues: INITIAL_LOGIN_FORM,
-  });
-
-  const onSubmit = form.handleSubmit(async (data) => {
-    console.log(data);
-  });
+  const { form, loading, onSubmit } = useLogin();
 
   return (
     <Card>
@@ -37,7 +29,7 @@ export default function Login() {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={onSubmit} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormInput
               form={form}
               type="email"
@@ -52,7 +44,7 @@ export default function Login() {
               label="Password"
               placeholder="********"
             />
-            <Button type="submit">Login</Button>
+            <Button type="submit">{loading ? <Spinner /> : "Login"}</Button>
           </form>
         </Form>
       </CardContent>
