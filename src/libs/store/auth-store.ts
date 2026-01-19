@@ -10,7 +10,7 @@ interface IAuthState {
   setUser: (user: IUser) => void;
   setToken: (token: string) => void;
   clearAuth: () => void;
-  updateUser: (user: IUser) => void;
+  updateUser: (user: Partial<IUser>) => void;
 }
 
 export const useAuthStore = create<IAuthState>()(
@@ -27,7 +27,10 @@ export const useAuthStore = create<IAuthState>()(
       clearAuth: () => {
         set({ user: null, token: null });
       },
-      updateUser: (user) => set({ user }),
+      updateUser: (partial) =>
+        set((state) => ({
+          user: state.user ? { ...state.user, ...partial } : null,
+        })),
     }),
     {
       name: "auth-storage",

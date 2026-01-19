@@ -12,6 +12,7 @@ export default function AuthHydrator({
   token: string;
 }) {
   const { setToken, setUser, clearAuth } = useAuthStore();
+
   const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
@@ -20,6 +21,8 @@ export default function AuthHydrator({
         clearAuth();
         return;
       }
+
+      setToken(token);
 
       try {
         const response = await authServices.getCurrentUser(token);

@@ -1,4 +1,4 @@
-import { LayoutDashboard, Settings } from "lucide-react";
+import { History, LayoutDashboard, Settings } from "lucide-react";
 
 export const SIDEBAR_MENU_LIST = {
   user: [
@@ -7,6 +7,12 @@ export const SIDEBAR_MENU_LIST = {
       url: "/user/dashboard",
       icon: LayoutDashboard,
     },
+    {
+      title: "History",
+      url: "/user/history",
+      icon: History,
+    },
+
     {
       title: "Settings",
       url: "/user/settings",

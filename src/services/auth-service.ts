@@ -1,6 +1,7 @@
 import { instance } from "@/libs/axios/instance";
 import endpoint from "@/services/endpoint-constant";
 import { ILoginData, IRegisterData } from "@/types/Auth";
+import { IProfileData, IProfileSecurity } from "@/types/Profile";
 
 const authServices = {
   register: (payload: IRegisterData) =>
@@ -12,7 +13,17 @@ const authServices = {
   logout: () => instance.post(`${endpoint.AUTH}/logout`),
 
   getCurrentUser: (token: string) =>
-    instance.get("/auth/me", {
+    instance.get(`${endpoint.AUTH}/me`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
+
+  updateProfileData: (token: string, payload: IProfileData) =>
+    instance.put(`${endpoint.PROFILE}/profile-data`, payload, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
+
+  updateProfileSecurity: (token: string, payload: IProfileSecurity) =>
+    instance.put(`${endpoint.PROFILE}/profile-security`, payload, {
       headers: { Authorization: `Bearer ${token}` },
     }),
 

@@ -7,7 +7,6 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const cookiesStore = await cookies();
 
-    // Forward request to backend API
     const response = await fetch(`${environment.API_URL}/auth/login`, {
       method: "POST",
       headers: {

@@ -1,3 +1,4 @@
+import Settings from "@/app/(dashboard)/user/settings/_components/settings";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,10 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function SettingsPage() {
-  return (
-    <div>
-      <h1>User Settings</h1>
-      <p>Ini user settings</p>
-    </div>
-  );
+  return <Settings />;
 }

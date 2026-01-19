@@ -11,7 +11,7 @@ import { toast } from "sonner";
 
 const useLogin = () => {
   const router = useRouter();
-  const { setToken, setUser, clearAuth } = useAuthStore();
+  const { setUser, clearAuth } = useAuthStore();
   const user = useAuthStore((state) => state.user);
 
   const [loading, setLoading] = useState(false);
@@ -29,8 +29,6 @@ const useLogin = () => {
 
       if (loginResponse.success) {
         const { access_token } = loginResponse.data;
-
-        setToken(access_token);
 
         const { data: userResponse } =
           await authServices.getCurrentUser(access_token);
