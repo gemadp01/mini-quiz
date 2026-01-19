@@ -6,7 +6,7 @@ const headers = {
 };
 
 export const instance = axios.create({
-  baseURL: `${environment.API_URL}/api`,
+  baseURL: `${environment.APP_URL}/api`,
   headers,
   withCredentials: true,
 });
