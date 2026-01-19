@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "User History!",
 };
 
-export default function DashboardPage() {
+export default function HistoryPage() {
   return (
     <div>
       <h1>History</h1>

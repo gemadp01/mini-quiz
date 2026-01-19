@@ -13,7 +13,7 @@ export async function POST() {
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
     const err = error as Error;
-    console.error("Login error:", err);
+    console.error("Logout error:", err);
     return NextResponse.json({ success: false, error: err }, { status: 500 });
   }
 }

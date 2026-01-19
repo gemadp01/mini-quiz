@@ -1,3 +1,4 @@
+import UserDashboard from "@/app/(dashboard)/user/dashboard/_components/user-dashboard";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,10 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function DashboardPage() {
-  return (
-    <div>
-      <h1>Dashboard</h1>
-      <p>Ini user dashboard</p>
-    </div>
-  );
+  return <UserDashboard />;
 }

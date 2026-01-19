@@ -26,7 +26,7 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.json(data, { status: response.status });
   } catch (error) {
-    console.error("Register error:", error);
+    console.error("profile data error:", error);
     return NextResponse.json(
       { success: false, error: "Internal server error" },
       { status: 500 },
