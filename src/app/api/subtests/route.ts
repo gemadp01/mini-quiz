@@ -5,8 +5,6 @@ export async function GET(request: NextRequest) {
   try {
     const authHeader = request.headers.get("authorization");
 
-    console.log(authHeader);
-
     if (!authHeader) {
       return NextResponse.json(
         { success: false, error: "No authorization token" },

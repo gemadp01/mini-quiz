@@ -1,7 +1,5 @@
 import UserDashboard from "@/app/(dashboard)/user/dashboard/_components/user-dashboard";
-import { Spinner } from "@/components/ui/spinner";
 import { Metadata } from "next";
-import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "User Dashboard | Mini Quiz",

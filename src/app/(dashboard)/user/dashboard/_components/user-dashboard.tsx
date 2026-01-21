@@ -17,7 +17,7 @@ import {
   subtestsIconKey,
 } from "@/constants/subtests-constant";
 import { useAuthStore } from "@/libs/store/auth-store";
-import quizServices from "@/services/quiz-service";
+import subtestsServices from "@/services/subtests-service";
 import { ISubtest } from "@/types/Subtest";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -33,7 +33,7 @@ export default function UserDashboard() {
     queryKey: ["subtests", token],
     queryFn: async () => {
       try {
-        const { data } = await quizServices.getSubtests(token);
+        const { data } = await subtestsServices.getSubtests(token);
 
         return data;
       } catch (error) {
