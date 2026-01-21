@@ -1,3 +1,4 @@
+import DashboardBreadcrumb from "@/app/(dashboard)/_components/dashboard-breadcrumb";
 import { DarkModeToggle } from "@/components/common/darkmode-toggle";
 import AppSidebar from "@/components/common/sidebar/app-sidebar";
 import { Separator } from "@/components/ui/separator";
@@ -29,7 +30,7 @@ export default async function DashboardLayout({
                 orientation="vertical"
                 className="mr-2 data-[orientation=vertical]:h-4"
               />
-              {/* <DashboardBreadcrumb /> */}
+              <DashboardBreadcrumb />
             </div>
             <div className="px-4">
               <DarkModeToggle />
