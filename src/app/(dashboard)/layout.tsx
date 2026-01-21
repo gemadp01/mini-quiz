@@ -1,5 +1,5 @@
-import AppSidebar from "@/components/common/app-sidebar";
 import { DarkModeToggle } from "@/components/common/darkmode-toggle";
+import AppSidebar from "@/components/common/sidebar/app-sidebar";
 import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
