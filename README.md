@@ -17,6 +17,7 @@ Mini Quiz Ambis adalah platform kuis berbasis web untuk membantu pengguna berlat
 - Backend (AI-generated)
 
 ## Folder Structure
+
 ```
 .
 └── mini-quiz/
@@ -86,6 +87,7 @@ Go to the project directory
 ```
 
 Copy .env from .env.example
+
 ```bash
     cp .env.example .env
 ```
@@ -99,7 +101,7 @@ Install dependencies
 Start the server
 
 ```bash
-  npm run start
+  npm run dev
 ```
 
 ## Authors
