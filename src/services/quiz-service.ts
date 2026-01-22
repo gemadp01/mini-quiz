@@ -3,19 +3,30 @@ import endpoint from "@/services/endpoint-constant";
 import { ISubmitQuizData } from "@/types/Quiz";
 
 const quizServices = {
-  startQuiz: (subtestId: string) =>
-    instance.get(`${endpoint.QUIZ}/start/${subtestId}`),
+  startQuiz: (subtestId: string, token: string) =>
+    instance.get(`${endpoint.QUIZ}/start/${subtestId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
 
-  getActiveQuiz: () => instance.get("/quiz/active"),
+  getActiveQuiz: (token: string) =>
+    instance.get(`${endpoint.QUIZ}/active`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
 
-  submitQuiz: (data: ISubmitQuizData) =>
-    instance.post(`${endpoint.QUIZ}/submit`, data),
+  submitQuiz: (data: ISubmitQuizData, token: string) =>
+    instance.post(`${endpoint.QUIZ}/submit`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
 
-  getHistory: (limit = 10, offset = 0) =>
-    instance.get(`${endpoint.QUIZ}/history?limit=${limit}&offset=${offset}`),
+  getHistory: (limit = 10, offset = 0, token: string) =>
+    instance.get(`${endpoint.QUIZ}/history?limit=${limit}&offset=${offset}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
 
-  getResult: (sessionId: string) =>
-    instance.get(`${endpoint.QUIZ}/result/${sessionId}`),
+  getResult: (sessionId: string, token: string) =>
+    instance.get(`${endpoint.QUIZ}/result/${sessionId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
 };
 
 export default quizServices;

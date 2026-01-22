@@ -8,9 +8,10 @@ async function handleRequest(
   path: string[], // potongan path URL (array)
 ) {
   try {
-    console.log(path);
     // Ambil header Authorization dari request client
     const authHeader = request.headers.get("authorization");
+
+    // console.log(authHeader);
 
     // Bangun base URL ke API backend
     // contoh: https://api.example.com/quiz/subtests
@@ -70,6 +71,8 @@ export async function GET(
   context: { params: Promise<{ path: string[] }> },
 ) {
   const { path } = await context.params;
+  // console.log(path);
+  // console.log(request);
   return handleRequest(request, "GET", path);
 }
 

@@ -17,7 +17,7 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (pathname === "/user") {
+  if (pathname === "/user" || pathname === "/user/quiz") {
     return NextResponse.redirect(new URL("/user/dashboard", request.url));
   }
 

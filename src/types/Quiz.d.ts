@@ -7,18 +7,18 @@ export interface IQuizQuestion {
 export interface IQuizSession {
   session_id: string;
   subtest_name: string;
-  questions: QuizQuestion[];
+  questions: IQuizQuestion[];
   expires_at: string;
 }
 
 export interface IStartQuizResponse {
   success: boolean;
-  data: QuizSession;
+  data: IQuizSession;
 }
 
 export interface IActiveQuizResponse {
   success: boolean;
-  data: QuizSession | null;
+  data: IQuizSession | null;
 }
 
 export interface IQuizAnswers {
@@ -26,7 +26,7 @@ export interface IQuizAnswers {
 }
 
 export interface ISubmitQuizData {
-  answers: QuizAnswers;
+  answers: IQuizAnswers;
 }
 
 export interface IQuizResult {
@@ -36,12 +36,12 @@ export interface IQuizResult {
   total_questions: number;
   correct_answers: number;
   submitted_at: string;
-  answers: QuizAnswers;
+  answers: IQuizAnswers;
 }
 
 export interface ISubmitQuizResponse {
   success: boolean;
-  data: QuizResult;
+  data: IQuizResult;
 }
 
 export interface IQuizHistoryItem {
@@ -54,12 +54,12 @@ export interface IQuizHistoryItem {
 export interface IQuizHistoryResponse {
   success: boolean;
   data: {
-    items: QuizHistoryItem[];
+    items: IQuizHistoryItem[];
     total: number;
   };
 }
 
 export interface IQuizResultResponse {
   success: boolean;
-  data: QuizResult;
+  data: IQuizResult;
 }
