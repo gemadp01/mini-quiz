@@ -25,9 +25,11 @@ export interface IQuizAnswers {
   [questionNumber: string]: string;
 }
 
-export interface ISubmitQuizData {
-  answers: IQuizAnswers;
-}
+export type ISubmitQuizData = IQuizAnswers;
+
+// export interface ISubmitQuizData {
+//   answers: IQuizAnswers;
+// } // { answers : { "1": "A", "2": "C" } }
 
 export interface IQuizResult {
   session_id: string;

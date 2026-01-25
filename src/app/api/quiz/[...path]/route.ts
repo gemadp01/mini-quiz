@@ -10,7 +10,6 @@ async function handleRequest(
   try {
     // Ambil header Authorization dari request client
     const authHeader = request.headers.get("authorization");
-
     // console.log(authHeader);
 
     // Bangun base URL ke API backend
@@ -43,11 +42,11 @@ async function handleRequest(
     // Jika method butuh body
     if (["POST", "PUT", "PATCH"].includes(method)) {
       // Ambil body mentah dari request client
-      const body = await request.text();
+      const body = request.json();
 
       // Jika body tidak kosong, kirim ke backend
       if (body) {
-        options.body = body;
+        options.body = JSON.stringify(body);
       }
     }
 

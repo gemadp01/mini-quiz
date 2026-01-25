@@ -25,14 +25,13 @@ export const useStartQuiz = () => {
   });
 };
 
-export const useActiveQuiz = (token: string) => {
-  return useQuery({
+export const useActiveQuiz = (token: string) =>
+  useQuery({
     queryKey: ["activeQuiz", token],
     queryFn: async () => await quizServices.getActiveQuiz(token),
     refetchOnWindowFocus: false,
     enabled: !!token,
   });
-};
 
 export const useSubmitQuiz = () => {
   const queryClient = useQueryClient();
@@ -61,12 +60,12 @@ export const useSubmitQuiz = () => {
 export const useQuizHistory = (limit = 10, offset = 0, token: string) =>
   useQuery({
     queryKey: ["quizHistory", limit, offset],
-    queryFn: () => quizServices.getHistory(limit, offset, token),
+    queryFn: async () => await quizServices.getHistory(limit, offset, token),
   });
 
 export const useQuizResult = (sessionId: string, token: string) =>
   useQuery({
     queryKey: ["quizResult", sessionId],
-    queryFn: () => quizServices.getResult(sessionId, token),
+    queryFn: async () => await quizServices.getResult(sessionId, token),
     enabled: !!sessionId && !!token,
   });

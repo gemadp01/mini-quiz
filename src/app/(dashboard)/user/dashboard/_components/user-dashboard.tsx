@@ -36,6 +36,7 @@ import { AxiosError } from "axios";
 import { AlertCircle, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
+import { resume } from "react-dom/server";
 import { Fragment } from "react/jsx-runtime";
 import { toast } from "sonner";
 
@@ -43,6 +44,8 @@ export default function UserDashboard() {
   const router = useRouter();
   const token = useAuthStore((state) => state.token) as string;
   const [searchTerm, setSearchTerm] = useState("");
+  const [resumeQuizLoading, setResumeQuizLoading] = useState(false);
+  const [startQuizLoading, setStartQuizLoading] = useState(false);
 
   const { data: { data: activeQuizData } = {} } = useActiveQuiz(token);
   const startQuizMutation = useStartQuiz();
@@ -85,17 +88,18 @@ export default function UserDashboard() {
   }, [searchTerm, subtestsData]);
 
   const handleStartQuiz = async (subtestId: string) => {
-    if (activeQuizData?.data) {
-      setSelectedSubtest(subtestId);
-      setShowActiveQuizDialog(true);
-      return;
-    }
-
+    // if (activeQuizData?.data) {
+    //   setSelectedSubtest(subtestId);
+    //   setShowActiveQuizDialog(true);
+    //   return;
+    // }
     try {
-      const result = await startQuizMutation.mutateAsync({ subtestId, token });
-      console.log(result);
+      setStartQuizLoading(true);
 
-      if (result.data.success) {
+      const { data: { data: result } = {} } =
+        await startQuizMutation.mutateAsync({ subtestId, token });
+
+      if (result) {
         router.push(`/quiz/${result.data.session_id}`);
       }
     } catch (error) {
@@ -109,11 +113,14 @@ export default function UserDashboard() {
       } else {
         toast.error("Unexpected error");
       }
+    } finally {
+      setStartQuizLoading(false);
     }
   };
 
   const handleResumeQuiz = () => {
     if (activeQuizData?.data) {
+      setResumeQuizLoading(true);
       router.push(`/user/quiz/${activeQuizData.data.session_id}`);
     }
   };
@@ -136,8 +143,15 @@ export default function UserDashboard() {
               size="sm"
               className="ml-4 cursor-pointer"
               onClick={handleResumeQuiz}
+              disabled={resumeQuizLoading}
             >
-              Resume <ArrowRight className="ml-2 w-4 h-4" />
+              {resumeQuizLoading ? (
+                <Spinner className="size-4" />
+              ) : (
+                <>
+                  Resume <ArrowRight className="ml-2 w-4 h-4" />
+                </>
+              )}
             </Button>
           </AlertDescription>
         </Alert>
@@ -178,9 +192,7 @@ export default function UserDashboard() {
                   >
                     {activeQuizData?.data.subtest_name === subtest.name
                       ? "In progress..."
-                      : subtest.is_active
-                        ? "Not Started"
-                        : "Complete"}
+                      : "Not Started"}
                   </Badge>
                 </CardAction>
               </CardHeader>

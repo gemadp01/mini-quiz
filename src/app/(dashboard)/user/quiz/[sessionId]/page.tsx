@@ -37,6 +37,8 @@ export default function QuizPage() {
   const { data: { data: activeQuizData } = {}, isLoading } =
     useActiveQuiz(token);
 
+  console.log(activeQuizData);
+
   // Mutation untuk submit jawaban quiz
   const submitQuizMutation = useSubmitQuiz();
 
@@ -58,6 +60,7 @@ export default function QuizPage() {
   }, [activeQuizData, sessionId, router]);
 
   const handleAnswerChange = (value: string) => {
+    // console.log(value); // isi jawaban user
     /**
 		 activeQuizData?.data?.questions[currentQuestion] -> misalnya ada 10 soal, maka ini akan mengambil data soal ke 1
 		 activeQuizData?.data?.questions[currentQuestion]?.question_number -> ini akan mengambil nomor soal
@@ -65,7 +68,6 @@ export default function QuizPage() {
 		 */
     const questionNumber =
       activeQuizData?.data?.questions[currentQuestion]?.question_number;
-
     // jika ada nomor soal, simpan jawaban
     if (questionNumber) {
       setAnswers((prev) => ({
@@ -73,11 +75,11 @@ export default function QuizPage() {
         [questionNumber.toString()]: value,
       }));
     }
+    console.log(answers);
 
     /**
 		question_number = 3
 		value = "B"
-
 		maka state answers akan berisi:
 		{
 			"3": "B"
@@ -111,16 +113,14 @@ export default function QuizPage() {
 			}
 		}
 		 */
+
     try {
-      const result = await submitQuizMutation.mutateAsync({
-        data: {
-          answers,
-        },
+      const { data: submitResult } = await submitQuizMutation.mutateAsync({
+        data: answers,
         token,
       });
-      console.log(result.data.data);
-      if (result.data.data.success) {
-        router.push(`/user/result/${result.data.data.session_id}`);
+      if (submitResult.success) {
+        router.push(`/user/result/${submitResult.data.session_id}`);
       }
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -137,9 +137,9 @@ export default function QuizPage() {
     setShowSubmitDialog(false);
   };
 
-  // const handleExpire = () => {
-  //   setShowExpiredDialog(true);
-  // };
+  const handleExpire = () => {
+    setShowExpiredDialog(true);
+  };
 
   if (isLoading) {
     return <Spinner className="mx-auto size-10" />;
@@ -174,7 +174,6 @@ export default function QuizPage() {
   const { questions, subtest_name, expires_at } = activeQuizData.data;
 
   // Ambil satu soal yang sedang aktif berdasarkan index currentQuestion
-  //
   // Contoh:
   // currentQuestion = 1
   // question = {
@@ -185,7 +184,6 @@ export default function QuizPage() {
 
   // Hitung progress pengerjaan quiz dalam bentuk persentase
   // Rumus: (soal saat ini + 1) / total soal × 100
-  //
   // Contoh:
   // currentQuestion = 1
   // questions.length = 5
@@ -206,7 +204,7 @@ export default function QuizPage() {
   const answeredCount = Object.keys(answers).length;
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-5xl w-full mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold">{subtest_name}</h1>
@@ -229,7 +227,7 @@ export default function QuizPage() {
         </CardHeader>
         <CardContent>
           <RadioGroup
-            value={answers[question.question_number.toString()] || ""}
+            value={answers[question.question_number.toString()] || ""} // default value dari soal atau jika udah diisi dia langsung load dari answers
             onValueChange={handleAnswerChange}
           >
             {question.options.map((option: string, idx: number) => (
@@ -238,10 +236,7 @@ export default function QuizPage() {
                 className="flex items-center space-x-2 p-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
               >
                 <RadioGroupItem value={option} id={`option-${idx}`} />
-                <Label
-                  htmlFor={`option-${idx}`}
-                  className="flex-1 cursor-pointer"
-                >
+                <Label htmlFor={`option-${idx}`} className="cursor-pointer">
                   {option}
                 </Label>
               </div>

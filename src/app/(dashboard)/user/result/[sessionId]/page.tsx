@@ -22,9 +22,10 @@ export default function ResultPage() {
   const params = useParams();
   const sessionId = params.sessionId as string;
 
-  const { data, isLoading } = useQuizResult(sessionId, token);
-
-  console.log(data);
+  const { data: { data: quizResult } = {}, isLoading } = useQuizResult(
+    sessionId,
+    token,
+  );
 
   if (isLoading) {
     return (
@@ -35,7 +36,7 @@ export default function ResultPage() {
     );
   }
 
-  if (!data?.data) {
+  if (!quizResult?.data) {
     return (
       <div className="text-center py-12">
         <p className="text-gray-600">Result not found.</p>
@@ -46,15 +47,18 @@ export default function ResultPage() {
     );
   }
 
-  const result = data.data;
-  const percentage = (result.score / result.total_questions) * 100;
+  const percentage =
+    (quizResult.data.result.score / quizResult.data.result.total_questions) *
+    100;
   const isPassed = percentage >= 60;
+  const dataResult = quizResult.data.result;
+  // console.log(dataResult);
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-6xl w-full mx-auto space-y-6">
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Quiz Results</h1>
-        <p className="text-gray-600 mt-2">{result.subtest_name}</p>
+        <p className="text-gray-600 mt-2">{dataResult.subtest_name}</p>
       </div>
 
       <Card
@@ -64,7 +68,7 @@ export default function ResultPage() {
           <div className="flex items-center justify-between">
             <div>
               <CardTitle className="text-3xl">
-                {result.score} / {result.total_questions}
+                {dataResult.score} / {dataResult.total_questions}
               </CardTitle>
               <CardDescription className="text-lg mt-2">
                 {percentage.toFixed(1)}% Score
@@ -86,13 +90,13 @@ export default function ResultPage() {
             <div className="bg-white p-4 rounded-lg">
               <p className="text-sm text-gray-600">Correct Answers</p>
               <p className="text-2xl font-bold text-green-600">
-                {result.correct_answers}
+                {dataResult.correct_answers}
               </p>
             </div>
             <div className="bg-white p-4 rounded-lg">
               <p className="text-sm text-gray-600">Wrong Answers</p>
               <p className="text-2xl font-bold text-red-600">
-                {result.total_questions - result.correct_answers}
+                {dataResult.total_questions - dataResult.correct_answers}
               </p>
             </div>
           </div>
@@ -100,7 +104,7 @@ export default function ResultPage() {
           <div className="bg-white p-4 rounded-lg">
             <p className="text-sm text-gray-600">Submitted At</p>
             <p className="text-lg font-medium">
-              {format(new Date(result.submitted_at), "PPpp")}
+              {format(new Date(dataResult.completed_at), "PPpp")}
             </p>
           </div>
 
@@ -118,14 +122,17 @@ export default function ResultPage() {
 
       <div className="flex gap-4">
         <Button
-          onClick={() => router.push("/dashboard")}
+          onClick={() => router.push("/user/dashboard")}
           variant="outline"
-          className="flex-1"
+          className="flex-1 cursor-pointer"
         >
           <Home className="w-4 h-4 mr-2" />
           Back to Dashboard
         </Button>
-        <Button onClick={() => router.push("/history")} className="flex-1">
+        <Button
+          onClick={() => router.push("/user/history")}
+          className="flex-1 cursor-pointer"
+        >
           <History className="w-4 h-4 mr-2" />
           View History
         </Button>
